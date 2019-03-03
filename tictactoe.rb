@@ -1,4 +1,4 @@
-  def tablero_nuevo
+ def tablero_nuevo
     @a1 = " "
     @a2 = " "
     @a3 = " "
@@ -42,6 +42,7 @@
       true
     else
       puts "El espacio está tomado, prueba otro!"
+      false
     end
   end
   
@@ -56,22 +57,30 @@
                         "c2" => @c2,
                         "c3" => @c3}    
     
-    puts "Por favor, elige un cuadrado:"
-    
+    jugada_correcta = false
+
+    while not jugada_correcta do 
+    puts "Por favor selecciona un espacio : "
     dec_usuario = gets.chomp.downcase
-    
+
     hash_dec_usuario.each do |elec, cuadrado|
       if dec_usuario == elec
         if check_disp(cuadrado)
           cuadrado.sub!(" ", "X")
           imprimir_tablero
+          jugada_correcta = true
+        else
+            jugada_correcta = false
+
         end
       elsif dec_usuario == "q" or dec_usuario == "quit"
         exit
       end
     end
+    end
   end
-  
+
+
   def turno_computadora
     cuadrados.shuffle.each do |cuadrado|
       if check_disp(cuadrado)
@@ -79,7 +88,6 @@
         break
       end
     end
-    #verif_ganador
   end
   
   def verif_ganador
